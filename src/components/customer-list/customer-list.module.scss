@@ -1,0 +1,20 @@
+$customer-list-border-color: #f0f0f0;
+
+.listWrapper {
+    padding-top: 30px;
+    border: 3px solid $customer-list-border-color;
+    text-align: center;
+    margin: 30px;
+}
+.customerList {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin: 0 auto;
+    padding: 30px;
+
+    li {
+        list-style: none;
+        padding: 0 30px;
+    }
+}
