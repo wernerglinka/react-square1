@@ -22,7 +22,7 @@ const Banner = (props) => {
   const bannerStyle = {
     backgroundImage: `url(${bgImgURL})`,
     backgroundAttachment: fixedBg ? 'fixed' : 'scroll',
-    backgroundPosition: fixedBg ? 'center 180px' : 'center'
+    backgroundPosition: fixedBg ? 'center top' : 'center'
   };
 
   const btnHTML = (
