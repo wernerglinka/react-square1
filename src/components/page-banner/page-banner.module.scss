@@ -2,13 +2,11 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 100%;
-    max-width: 1600px;
-    margin: 0 auto 30px;
+    margin: 0 auto;
     min-height: 300px;
     background-repeat: no-repeat;
     background-attachment: scroll;
-    background-size: 1600px auto;
+    background-size: cover;
     background-position: center;
 
     h1 {

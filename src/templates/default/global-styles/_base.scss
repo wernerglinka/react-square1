@@ -5,14 +5,21 @@ $content-background-color: #ffffff;
 html {
     background-color: $page-background-color;
 }
+.main-content {
+    background-color: $content-background-color;
+    padding: 50px 30px;
+
+    // page banner inside main content
+    [class*="pageBanner"] {
+        margin: 0 -30px;
+    }
+}
 .container {
     margin: 0 auto;
     max-width: 1600px;
     padding: 30px;
 }
-.main-content {
-    background-color: $content-background-color;
-}
+
 // typically used for the introduction paragraph of a page
 .intro {
     font-size: 1.2rem;
@@ -25,15 +32,9 @@ html {
 .top-message + .navbar-wrapper {
     margin-top: $top-message-height;
 }
-/*
-// hide page title when banner is present
-.page-banner + .container > .page-title,
-.page-banner + .page-title {
-    display: none;
-}
-*/
 
 .lightText {
     color: #fff;
     text-shadow: 0px 0px 20px rgba(0,0,0,0.8) !important;
 }
+
