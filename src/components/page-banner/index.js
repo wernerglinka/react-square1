@@ -8,12 +8,13 @@ import CTA from '../cta-button';
  *  can be used as a regular page banner under the nav or as an in-page-CTA
  *  background may be fixed or scroll
  *  may be used without a CTA -> see propTypes below
+ *  default text color is black, lightText: true will change text color to white
  */
 const Banner = (props) => {
   // destructure props with object in it
   const {
     banner: {
-      title, bgImgURL, ctaText, ctaURL, fixedBg
+      title, bgImgURL, ctaText, ctaURL, fixedBg, lightText
     }
   } = props;
 
@@ -33,7 +34,7 @@ const Banner = (props) => {
 
   return (
     <div className={styles.pageBanner} style={bannerStyle}>
-      <h1>{title}</h1>
+      <h1 className={lightText ? 'lightText' : undefined}>{title}</h1>
       {ctaText && ctaURL && btnHTML}
     </div>
   );
@@ -52,9 +53,9 @@ Banner.propTypes = {
     bgImgURL: PropTypes.string.isRequired,
     ctaText: PropTypes.string,
     ctaURL: PropTypes.string,
-    fixedBg: PropTypes.bool.isRequired
+    fixedBg: PropTypes.bool.isRequired,
+    lightText: PropTypes.bool
   })
-
 };
 
 export default Banner;

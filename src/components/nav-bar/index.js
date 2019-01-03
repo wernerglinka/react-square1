@@ -16,7 +16,7 @@ const NavBar = ({ hasLinks }) => {
   return (
     <nav className={styles.navBar}>
       <Link to="/">
-        <img className={styles.mainLogo} src="/images/main-logo.png" alt="main logo" />
+        <img className={styles.mainLogo} src="/assets/images/main-logo.png" alt="main logo" />
       </Link>
       { hasLinks && linkList }
     </nav>

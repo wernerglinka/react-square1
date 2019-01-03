@@ -1,7 +1,6 @@
 import React from 'react';
 import { graphql, Link } from 'gatsby';
 import PropTypes from 'prop-types';
-import PageTransition from 'gatsby-plugin-page-transitions';
 import styles from './about.module.scss';
 import Layout from '../../templates/default';
 import PageTitle from '../../components/page-title';
@@ -37,52 +36,74 @@ User.propTypes = {
 /* eslint no-undef: 0 */
 // eslint-disable-next-line
 const About = ({ data }) => {
-  // this page has a banner
+
+  // page banner
   // set the banner properties in object literal 'bannerConfic'
   const bannerConfig = {
     title: 'this is a banner title',
-    bgImgURL: '/images/banners/home-banner-bg.jpg',
+    bgImgURL: '/assets/images/banners/home-banner-bg.jpg',
     ctaText: 'Read more here',
-    ctaURL: 'https://apple.com'
+    ctaURL: 'https://apple.com',
+    fixedBg: true,
+    lightText: false
   };
 
-  // if page has a top message then set properties in object literal topoMessage.
-  // if a pageToMessage is defined it will be shown. otherwise siteTopMessage will be shown
-  const topMessage = {
-    pageTopMessage: 'this is the <a href="https://apple.com">page specific</a> top message',
-    siteTopMessage: data.site.siteMetadata.topMessage,
-  };
+  // in-page banner
+  // set the banner properties in object literal 'bannerConfic'
+  // const inPageBannerConfig = {
+  //  title: 'this is an in-page banner without a CTA',
+  //  bgImgURL: '/images/banners/in-page-cta.jpg',
+  //  fixedBg: false,
+  //  lightText: true
+  // };
 
-    // set the page specific page title here, to use site default use  an empty string
-  const pageTitle = 'this is page specific page title';
+  // top message
+  // if the page uses a local pageToMessage defined it here
+  // if page uses a site-wide topMessage use "data.site.siteMetadata.topMessage"
+  // if no topMessage delete or comment-out this part
+  const topMessage = data.site.siteMetadata.topMessage;
 
+  // page title
   // if bannerConfig is defined then we do not render a page title, the banner h1 will act as the page title
   // both bannerConfig and topMessage are conditional props. They can be commented above without causing
   // the code to break.
+  const pageTitle = 'this is page specific page title';
+
+  // enable navigation links
+  // navigation links may be hidden to build a "link less" landing page
+  const hasLinks = true;
+
+  // footer
+  // if footer has a background image define it here.
+  // if footer should use a site-wide bg image use "data.site.siteMetadata.defaultImages.footer"
+  // if no footer img delete or comment-out this part
+  // const footerBgImg = data.site.siteMetadata.defaultImages.footer;
+
   return (
 
-    <PageTransition>
-      <Layout
-        {...(typeof bannerConfig !== 'undefined' && { banner: bannerConfig })}
-        {...(typeof topMessage !== 'undefined' && { topMessage })}
-      >
-        {!bannerConfig ? <PageTitle headerText={pageTitle || data.site.siteMetadata.title} /> : null}
-        <div>
-          <p>CSS Modules are cool</p>
-          <User
-            username="Jane Doe"
-            avatar="https://s3.amazonaws.com/uifaces/faces/twitter/adellecharles/128.jpg"
-            excerpt="I'm Jane Doe. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-          />
-          <User
-            username="Bob Smith"
-            avatar="https://s3.amazonaws.com/uifaces/faces/twitter/vladarbatov/128.jpg"
-            excerpt="I'm Bob smith, a vertically aligned type of guy. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-          />
-          <Link to="/">Go Back</Link>
-        </div>
-      </Layout>
-    </PageTransition>
+
+    <Layout
+      {...(typeof bannerConfig !== 'undefined' && { banner: bannerConfig })}
+      {...(typeof topMessage !== 'undefined' && { topMessage })}
+      hasLinks={hasLinks}
+    >
+      {!bannerConfig ? <PageTitle headerText={pageTitle} /> : null}
+      <div>
+        <p>CSS Modules are cool</p>
+        <User
+          username="Jane Doe"
+          avatar="https://s3.amazonaws.com/uifaces/faces/twitter/adellecharles/128.jpg"
+          excerpt="I'm Jane Doe. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+        />
+        <User
+          username="Bob Smith"
+          avatar="https://s3.amazonaws.com/uifaces/faces/twitter/vladarbatov/128.jpg"
+          excerpt="I'm Bob smith, a vertically aligned type of guy. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+        />
+        <Link to="/">Go Back</Link>
+      </div>
+    </Layout>
+
   );
 };
 
@@ -94,12 +115,10 @@ export const query = graphql`
   query {
     site {
       siteMetadata {
-        title
-      }
-    }
-    site {
-      siteMetadata {
         topMessage
+        defaultImages {
+          footer
+        }
       }
     }
   }

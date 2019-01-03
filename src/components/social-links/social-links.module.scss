@@ -1,0 +1,24 @@
+$icon-size: 60px;
+$icon-font-size: 30px;
+
+.socialLinks {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+
+    li {
+        list-style: none;
+        display: inline-block;
+        width: $icon-size;
+        height: $icon-size;
+        border: 3px solid #ccc;
+        border-radius: $icon-size/2;
+        margin-right: 20px;
+        text-align: center;
+
+        i {
+            font-size: $icon-font-size;
+            line-height: $icon-size - 4px;
+        }
+    }
+}

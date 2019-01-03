@@ -2,51 +2,51 @@
   {
     "name": "Architectural Digest",
     "linkURL": "https://www.architecturaldigest.com/",
-    "logo": "/images/client-logos/architectural-digest.jpg"
+    "logo": "/assets/images/client-logos/architectural-digest.jpg"
   },
   {
     "name": "Bon Appetit",
     "linkURL": "https://www.bonappetit.com/",
-    "logo": "/images/client-logos/bon-appetit.jpg"
+    "logo": "/assets/images/client-logos/bon-appetit.jpg"
   },
   {
     "name": "Brides",
     "linkURL": "https://www.brides.com/",
-    "logo": "/images/client-logos/brides.jpg"
+    "logo": "/assets/images/client-logos/brides.jpg"
   },
   {
     "name": "Glamour",
     "linkURL": "https://www.glamourmagazine.co.uk/",
-    "logo": "/images/client-logos/glamour.jpg"
+    "logo": "/assets/images/client-logos/glamour.jpg"
   },
   {
     "name": "GolfWorld",
     "linkURL": "https://www.golfdigest.com",
-    "logo": "/images/client-logos/golfworld.jpg"
+    "logo": "/assets/images/client-logos/golfworld.jpg"
   },
   {
     "name": "GQ",
     "linkURL": "https://www.gq.com/",
-    "logo": "/images/client-logos/gq.jpg"
+    "logo": "/assets/images/client-logos/gq.jpg"
   },
   {
     "name": "Traveler",
     "linkURL": "https://www.cntraveler.com/",
-    "logo": "/images/client-logos/traveler.jpg"
+    "logo": "/assets/images/client-logos/traveler.jpg"
   },
   {
     "name": "Vanity Fair",
     "linkURL": "https://www.vanityfair.com/",
-    "logo": "/images/client-logos/vanity-fair.jpg"
+    "logo": "/assets/images/client-logos/vanity-fair.jpg"
   },
   {
     "name": "Vogue",
     "linkURL": "https://www.vogue.com/",
-    "logo": "/images/client-logos/vogue.jpg"
+    "logo": "/assets/images/client-logos/vogue.jpg"
   },
   {
     "name": "Wired",
     "linkURL": "https://www.wired.com/",
-    "logo": "/images/client-logos/wired.jpg"
+    "logo": "/assets/images/client-logos/wired.jpg"
   }
 ]

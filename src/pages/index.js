@@ -14,7 +14,6 @@
 
 import React from 'react';
 import { graphql } from 'gatsby';
-import PageTransition from 'gatsby-plugin-page-transitions';
 import Layout from '../templates/default';
 import PageTitle from '../components/page-title';
 import CustomerList from '../components/customer-list';
@@ -28,68 +27,77 @@ const HomePage = ({ data }) => {
   // set the banner properties in object literal 'bannerConfic'
   const bannerConfig = {
     title: 'this is a banner title',
-    bgImgURL: '/images/banners/home-banner-bg.jpg',
+    bgImgURL: '/assets/images/banners/home-banner-bg.jpg',
     ctaText: 'Read more here',
     ctaURL: 'https://apple.com',
-    fixedBg: true
+    fixedBg: true,
+    lightText: false
   };
 
   // in-page banner
   // set the banner properties in object literal 'bannerConfic'
   const inPageBannerConfig = {
     title: 'this is an in-page banner without a CTA',
-    bgImgURL: '/images/banners/in-page-cta.jpg',
-    fixedBg: false
+    bgImgURL: '/assets/images/banners/in-page-cta.jpg',
+    fixedBg: false,
+    lightText: true
   };
 
   // top message
-  // if the local pageToMessage is defined it will be shown. otherwise siteTopMessage will be shown
-  const topMessage = {
-    pageTopMessage: 'this is the <a href="https://apple.com">page specific</a> top message',
-    siteTopMessage: data.site.siteMetadata.topMessage,
-  };
+  // if the page uses a local pageToMessage defined it here
+  // if page uses a site-wide topMessage use "data.site.siteMetadata.topMessage"
+  // if no topMessage delete or comment-out this part
+  const topMessage = 'this is the <a href="https://apple.com">page specific</a> top message';
 
   // page title
-  // set the page specific page title here, to use site default use  an empty string
+  // if bannerConfig is defined then we do not render a page title, the banner h1 will act as the page title
+  // both bannerConfig and topMessage are conditional props. They can be commented above without causing
+  // the code to break.
   const pageTitle = 'this is page specific page title';
 
   // enable navigation links
   // navigation links may be hidden to build a "link less" landing page
   const hasLinks = true;
 
-  // if bannerConfig is defined then we do not render a page title, the banner h1 will act as the page title
-  // both bannerConfig and topMessage are conditional props. They can be commented above without causing
-  // the code to break.
+  // footer
+  // if footer has a background image define it here.
+  // if footer should use a site-wide bg image use "data.site.siteMetadata.defaultImages.footer"
+  // if no footer img delete or comment-out this part
+  const footerBgImg = data.site.siteMetadata.defaultImages.footer;
+
+  console.log(footerBgImg);
+
   return (
-    <PageTransition>
-      <Layout
-        {...(typeof bannerConfig !== 'undefined' && { banner: bannerConfig })}
-        {...(typeof topMessage !== 'undefined' && { topMessage })}
-        hasLinks={hasLinks}
-      >
-        {!bannerConfig ? <PageTitle headerText={pageTitle} /> : null}
 
-        <div className="container main-content">
-          <h2>Inceptos Pellentesque Nibh Lorem</h2>
-          <p className="intro">Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Etiam porta sem malesuada magna mollis euismod. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Nulla vitae elit libero, a pharetra augue.</p>
-          <p>Aenean lacinia bibendum nulla sed consectetur. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Etiam porta sem malesuada magna mollis euismod.</p>
-          <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam porta sem malesuada magna mollis euismod. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+    <Layout
+      {...(typeof bannerConfig !== 'undefined' && { banner: bannerConfig })}
+      {...(typeof topMessage !== 'undefined' && { topMessage })}
+      {...(typeof footerBgImg !== 'undefined' && { footerBgImg })}
+      hasLinks={hasLinks}
+    >
+      {!bannerConfig ? <PageTitle headerText={pageTitle} /> : null}
 
-          <CustomerList />
+      <div className="container main-content">
+        <h2>Inceptos Pellentesque Nibh Lorem</h2>
+        <p className="intro">Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Etiam porta sem malesuada magna mollis euismod. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Nulla vitae elit libero, a pharetra augue.</p>
+        <p>Aenean lacinia bibendum nulla sed consectetur. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Etiam porta sem malesuada magna mollis euismod.</p>
+        <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam porta sem malesuada magna mollis euismod. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
 
-          <h2>Maecenas sed diam eget risus varius blandit sit amet non magna.</h2>
-          <p>Donec sed odio dui. Maecenas sed diam eget risus varius blandit sit amet non magna. Aenean lacinia bibendum nulla sed consectetur. Donec ullamcorper nulla non metus auctor fringilla.</p>
+        <CustomerList />
 
-          <p>Curabitur blandit tempus porttitor. Maecenas sed diam eget risus varius blandit sit amet non magna. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet fermentum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
+        <h2>Maecenas sed diam eget risus varius blandit sit amet non magna.</h2>
+        <p>Donec sed odio dui. Maecenas sed diam eget risus varius blandit sit amet non magna. Aenean lacinia bibendum nulla sed consectetur. Donec ullamcorper nulla non metus auctor fringilla.</p>
 
-          <Banner banner={inPageBannerConfig} />
+        <p>Curabitur blandit tempus porttitor. Maecenas sed diam eget risus varius blandit sit amet non magna. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet fermentum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
 
-          <h2>Sed posuere consectetur </h2>
-          <p>Donec sed odio dui. Nulla vitae elit libero, a pharetra augue. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas sed diam eget risus varius blandit sit amet non magna. Aenean lacinia bibendum nulla sed consectetur. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.</p>
+        <Banner banner={inPageBannerConfig} />
 
-        </div>
-      </Layout>
-    </PageTransition>
+        <h2>Sed posuere consectetur </h2>
+        <p>Donec sed odio dui. Nulla vitae elit libero, a pharetra augue. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas sed diam eget risus varius blandit sit amet non magna. Aenean lacinia bibendum nulla sed consectetur. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.</p>
+
+      </div>
+    </Layout>
+
   );
 };
 
@@ -100,6 +108,9 @@ export const query = graphql`
     site {
       siteMetadata {
         topMessage
+        defaultImages {
+          footer
+        }
       }
     }
   }
