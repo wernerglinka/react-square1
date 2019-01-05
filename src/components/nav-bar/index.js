@@ -11,6 +11,7 @@ const NavBar = ({ hasLinks }) => {
       <ListLink to="/">Home</ListLink>
       <ListLink to="/about/">About</ListLink>
       <ListLink to="/files">Files</ListLink>
+      <ListLink to="/soft-scroll-demo">Soft Scroll Demo</ListLink>
     </ul>
   );
   return (

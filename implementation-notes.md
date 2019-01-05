@@ -10,10 +10,21 @@
 - page-footer
 - page-title
 - page-top-message
+- media-module-vertical
+- copyright-notice
+- social-links
+
+Smooth scrolling has been implemented with react-scroll 
+- https://github.com/fisshy/react-scroll
+- https://www.npmjs.com/package/react-scroll
+
+Ref: 
+- https://scotch.io/tutorials/implementing-smooth-scrolling-in-react
+- https://github.com/jamesqquick/React-With-Smooth-Scrolling
+
+
 
 ## TODO
-- key-point
-- copyright-notics
-- social-links
+
 
   

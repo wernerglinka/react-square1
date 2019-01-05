@@ -10,6 +10,12 @@
     height: auto;
 }
 .linkList {
+    margin: 8px 0 0 0;
     list-style: none;
     float: right;
+
+    li {
+        margin: 0;
+        padding: 10px 20px;
+    }
 }

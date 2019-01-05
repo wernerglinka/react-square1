@@ -22,6 +22,7 @@
     "react-dom": "^16.5.1",
     "react-scroll": "^1.7.10",
     "react-typography": "^0.16.18",
+    "react-waypoint": "^8.1.0",
     "typography": "^0.16.18",
     "typography-theme-moraga": "^0.16.18"
   }

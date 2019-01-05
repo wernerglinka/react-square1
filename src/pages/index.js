@@ -1,4 +1,4 @@
-/* eslint react/jsx-one-expression-per-line:0 */
+/* eslint react/jsx-one-expression-per-line:0, react/self-closing-comp: 0 */
 /**
  *  HomePage using the default page template
  *  a default page template uses the default layout to implement
@@ -15,11 +15,16 @@
 
 import React from 'react';
 import { graphql } from 'gatsby';
+import { Link as ScrollLink, animateScroll } from 'react-scroll';
 import Layout from '../templates/default';
 import PageTitle from '../components/page-title';
 import CustomerList from '../components/customer-list';
 import Banner from '../components/page-banner';
 import MediaModule from '../components/media-module-vertical';
+
+const scrollToTop = () => {
+  animateScroll.scrollToTop();
+};
 
 /* eslint no-undef: 0 */
 // eslint-disable-next-line
@@ -105,8 +110,19 @@ const HomePage = ({ data }) => {
       <div className="main-content">
         <div className="container">
           <h2>Inceptos Pellentesque Nibh Lorem</h2>
-          <p className="intro">Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Etiam porta sem malesuada magna mollis euismod. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Nulla vitae elit libero, a pharetra augue.</p>
-          <p>Aenean lacinia bibendum nulla sed consectetur. <a href="#testSec">Cras justo odio</a>, dapibus ac facilisis in, egestas eget quam. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Etiam porta sem malesuada magna mollis euismod.</p>
+          <p className="intro">This is the home page of the Square1 Gatsby demo site. This page features various components:</p>
+          <ul>
+            <li>A <strong>Top Message</strong> (components/page-top-message) at the top of the page. This is often used to provide a short high-priority message to site visitors. This message maybe set per page or a site-wide message which is defined in gatsby-config.js may be used. See code comments for further info.</li>
+            <li>A <strong>navigation menu</strong> (components/nav-bar) that includes the brand logo and site navigation.</li>
+            <li>A <strong>Page Banner</strong> (components/page-banner) typically used for the primary message and an important call to axction</li>
+            <li>A <strong>Customer List</strong> (components/customer-list) that lists featured customers.</li>
+            <li>An alternative use of the page banner as an <strong>in-page CTA</strong></li>
+            <li>A <strong>feature list</strong> that support the main message of this page</li>
+            <li> A <strong>footer</strong> that includes a <strong>copyright</strong> component and a <strong>social links</strong> component</li>
+          </ul>
+
+          <p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Etiam porta sem malesuada magna mollis euismod. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Nulla vitae elit libero, a pharetra augue.</p>
+          <p><em>This link is an example of a smooth scroll to a section on this page.</em> <ScrollLink className="smooth-scroll" smooth to="testSec">Click to scroll</ScrollLink>, dapibus ac facilisis in, egestas eget quam. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Etiam porta sem malesuada magna mollis euismod.</p>
           <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam porta sem malesuada magna mollis euismod. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
 
           <CustomerList />
@@ -133,6 +149,7 @@ const HomePage = ({ data }) => {
 
         </div>
       </div>
+      <button className="to-top" type="button" onClick={scrollToTop}><i className="icon icon-arrow-up"></i></button>
     </Layout>
   );
 };

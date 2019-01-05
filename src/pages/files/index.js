@@ -3,13 +3,11 @@ import { graphql } from 'gatsby';
 import Layout from '../../templates/default';
 
 export default ({ data }) => {
-  // if page has a top message then set properties in object literal topoMessage.
-  // if a pageToMessage is defined it will be shown. otherwise siteTopMessage will be shown
-  const topMessage = {
-    hasTopMessage: false,
-    pageTopMessage: '',
-    siteTopMessage: data.site.siteMetadata.topMessage,
-  };
+  // top message
+  // if the page uses a local pageToMessage defined it here
+  // if page uses a site-wide topMessage use "data.site.siteMetadata.topMessage"
+  // if no topMessage delete or comment-out this part
+  const topMessage = data.site.siteMetadata.topMessage;
 
   return (
     <Layout topMessage={topMessage}>

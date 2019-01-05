@@ -1,6 +1,7 @@
 $top-message-height: 80px;
 $page-background-color: #f5f5f5;
 $content-background-color: #ffffff;
+$to-top-size: 40px;
 
 html {
     background-color: $page-background-color;
@@ -20,13 +21,61 @@ html {
     padding: 30px;
 }
 
+.center-elements {
+    text-align: center;
+}
+
+.smooth-scroll {
+    cursor: pointer;
+    color: blue;
+
+    &:hover {
+        text-decoration: none;
+        color: lighten(blue, 40%);
+    }
+}
+.to-top {
+    position: fixed;
+    right: 30px;
+    bottom: 30px;
+    z-index: 1;
+    background: none;
+    width: $to-top-size;
+    height: $to-top-size;
+    line-height: $to-top-size;
+    border: 1px solid #000;
+    border-radius: $to-top-size/2;
+    cursor: pointer;
+    transition: all 0.5s;
+    outline: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+
+    &.isVisible {
+      opacity: 1;
+    }
+}
+
+.nav.isFixed {
+    position: fixed;
+    top: 80px;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
 // typically used for the introduction paragraph of a page
 .intro {
     font-size: 1.2rem;
 }
-.highlight_full-width {
+.highlight {
     background-color: #f5f5f5;
 }
+
+.no-highlight {
+    background-color: #fff;
+}
+
 
 // add top margin when top-message is present
 .top-message + .navbar-wrapper {
