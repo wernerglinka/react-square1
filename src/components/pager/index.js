@@ -15,7 +15,8 @@ PagerItem.propTypes = {
   pageType: PropTypes.string.isRequired
 };
 
-
+// an interesting use of Array.from to create the pager elements
+// see also: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from
 const Pager = ({ numPages, currentPage }) => (
   <ul className={styles.pager}>
     {Array.from({ length: numPages }, (_, i) => (

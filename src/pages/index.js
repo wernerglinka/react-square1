@@ -15,6 +15,7 @@
 
 import React from 'react';
 import { Link, graphql } from 'gatsby';
+import Img from 'gatsby-image';
 import { Link as ScrollLink, animateScroll } from 'react-scroll';
 import Waypoint from 'react-waypoint';
 import Layout from '../templates/default';
@@ -166,7 +167,7 @@ class HomePage extends React.Component {
 
             <h2>Maecenas sed diam eget risus varius blandit sit amet non magna.</h2>
             <p>Donec sed odio dui. Maecenas sed diam eget risus varius blandit sit amet non magna. Aenean lacinia bibendum nulla sed consectetur. Donec ullamcorper nulla non metus auctor fringilla.</p>
-
+            <Img fluid={this.props.data.file.childImageSharp.fluid} />
             <p>Curabitur blandit tempus porttitor. Maecenas sed diam eget risus varius blandit sit amet non magna. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet fermentum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
           </div>
 
@@ -202,6 +203,13 @@ export const query = graphql`
         defaultImages {
           footer
         }
+      }
+    }
+    file (relativePath: { eq: "worldmap.jpg" }){
+      childImageSharp {
+        fluid(maxWidth: 700) {
+        ...GatsbyImageSharpFluid_noBase64
+      }
       }
     }
   }

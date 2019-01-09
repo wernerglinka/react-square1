@@ -16,6 +16,12 @@ module.exports = {
         path: `${__dirname}/src`,
       }
     },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        path: `${__dirname}/static/assets/images`,
+      }
+    },
     'gatsby-transformer-remark',
     {
       resolve: 'gatsby-plugin-typography',
@@ -24,5 +30,7 @@ module.exports = {
       }
     },
     'gatsby-plugin-sass',
+    'gatsby-transformer-sharp',
+    'gatsby-plugin-sharp'
   ],
 };

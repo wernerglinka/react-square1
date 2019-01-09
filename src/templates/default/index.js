@@ -15,7 +15,7 @@ const DefaultLayout = ({
 }) => (
   <div>
 
-    { topMessage ? <TopMessage topMessage={topMessage} /> : null }
+    { topMessage && <TopMessage topMessage={topMessage} /> }
 
     <div className="highlight_full-width navbar-wrapper">
       <NavBar hasLinks={hasLinks} />

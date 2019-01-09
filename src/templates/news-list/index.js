@@ -104,6 +104,18 @@ class News extends Component {
               onLeave={this.handleWaypointLeave}
             />
 
+            {currentPage === 1 && (
+              <div>
+                <h2>Our Press Coverage</h2>
+                <p className="intro">
+                  This text is only displayed on the first news listing page.
+                  <br />
+                  {/* eslint react/jsx-one-expression-per-line:0 */}
+                  All press items are stored in <em>data/news/news.json</em>. The code to implement paging is located in <strong>gatsby-node.js</strong>. The approach was inspired by https://www.gatsbyjs.org/docs/adding-pagination/. However, all pagination examples seem to focus on a blog implementation, with blog pages authored in markdown. For this News application there are no pages only the list pages and the list pages display the news title and news organization logo linked to the original publication.
+                </p>
+              </div>
+            )}
+
             <ul className={styles.newsList}>
               { newsItems.map(({ node }) => (
                 <li key={node.news_title}>

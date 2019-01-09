@@ -48,8 +48,10 @@ class FileList extends React.Component {
     // if no topMessage delete or comment-out this part
     const { data: { site: { siteMetadata: { topMessage } } } } = this.props;
 
+    // the all files list
     const { data: { allFile: { edges: allFiles } } } = this.props;
 
+    // array with all column titles
     const { data: { allFile: { edges } } } = this.props;
     const titleArray = edges[0].node;
 

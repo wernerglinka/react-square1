@@ -24,8 +24,7 @@ class Transition extends PureComponent {
 
 Transition.propTypes = {
   children: PropTypes.node.isRequired,
-  // eslint-disable-next-line
-  location: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired  // eslint-disable-line
 };
 
 export default Transition;

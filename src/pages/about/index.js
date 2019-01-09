@@ -98,7 +98,8 @@ class About extends React.Component {
     // if no topMessage delete or comment-out this part
     // eslint-disable-next-line
     //const topMessage = this.props.data.site.siteMetadata.topMessage;
-    const { data: { site: { siteMetadata: { topMessage } } } } = this.props;
+    // const { data: { site: { siteMetadata: { topMessage } } } } = this.props;
+    const topMessage = 'this is another freaking top message YAY';
 
     // page title
     // if bannerConfig is defined then we do not render a page title, the banner h1 will act as the page title
