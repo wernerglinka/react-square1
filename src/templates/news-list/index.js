@@ -3,9 +3,10 @@ import { graphql } from 'gatsby';
 import PropTypes from 'prop-types';
 import { animateScroll } from 'react-scroll';
 import Waypoint from 'react-waypoint';
-import Layout from '../../templates/default';
+import Layout from '../default';
 import PageTitle from '../../components/page-title';
-import styles from './news.module.scss';
+import Pager from '../../components/pager';
+import styles from './news-list.module.scss';
 
 
 class News extends Component {
@@ -81,6 +82,10 @@ class News extends Component {
     // const footerBgImg = this.props.data.site.siteMetadata.defaultImages.footer;
     const { data: { site: { siteMetadata: { defaultImages: { footer: footerBgImg } } } } } = this.props;
 
+
+    // get the context to build a pager
+    const { pageContext: { numPages, currentPage } } = this.props;
+
     return (
 
       <Layout
@@ -113,6 +118,8 @@ class News extends Component {
               ))}
             </ul>
 
+            {numPages > 1 ? <Pager numPages={numPages} currentPage={currentPage} /> : null}
+
             <button className={`to-top ${toTopVisible ? 'isVisible' : ''}`} type="button" onClick={this.scrollToTop}><i className="icon icon-arrow-up" /></button>
 
           </div>
@@ -123,15 +130,24 @@ class News extends Component {
 }
 
 News.propTypes = {
-  data: PropTypes.object.isRequired
+  data: PropTypes.object.isRequired,   // eslint-disable-line
+  pageContext: PropTypes.shape({
+    numPages: PropTypes.number.isRequired,
+    currentPage: PropTypes.number.isRequired
+  }).isRequired,
+  location: PropTypes.shape({
+    href: PropTypes.string.isRequired
+  }).isRequired
 };
 
 export default News;
 
-
 export const query = graphql`
-  query newsQuery {
-    allNewsJson {
+  query newsQuery ($skip: Int!, $limit: Int!) {
+    allNewsJson (
+      limit: $limit
+      skip: $skip
+    ){
     edges {
       node {
         name_org

@@ -20,8 +20,6 @@ const CustomerList = () => (
     render={(data) => {
       const allCustomers = data.allCustomersJson.edges;
 
-      console.log(allCustomers);
-
       return (
         <section className={styles.listWrapper}>
           <h1>Our Customers</h1>

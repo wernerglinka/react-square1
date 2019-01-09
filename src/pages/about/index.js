@@ -38,50 +38,6 @@ User.propTypes = {
 /* eslint no-undef: 0 */
 // eslint-disable-next-line
 class About extends React.Component {
-
-  // page banner
-  // set the banner properties in object literal 'bannerConfic'
-  bannerConfig = {
-    title: 'this is a banner title',
-    bgImgURL: '/assets/images/banners/home-banner-bg.jpg',
-    ctaText: 'Read more here',
-    ctaURL: 'https://apple.com',
-    fixedBg: true,
-    lightText: false
-  };
-
-  // in-page banner
-  // set the banner properties in object literal 'bannerConfic'
-  // const inPageBannerConfig = {
-  //  title: 'this is an in-page banner without a CTA',
-  //  bgImgURL: '/images/banners/in-page-cta.jpg',
-  //  fixedBg: false,
-  //  lightText: true
-  // };
-
-  // top message
-  // if the page uses a local pageToMessage defined it here
-  // if page uses a site-wide topMessage use "data.site.siteMetadata.topMessage"
-  // if no topMessage delete or comment-out this part
-  // eslint-disable-next-line
-  topMessage = this.props.data.site.siteMetadata.topMessage;
-
-  // page title
-  // if bannerConfig is defined then we do not render a page title, the banner h1 will act as the page title
-  // both bannerConfig and topMessage are conditional props. They can be commented above without causing
-  // the code to break.
-  pageTitle = 'this is page specific page title';
-
-  // enable navigation links
-  // navigation links may be hidden to build a "link less" landing page
-  hasLinks = true;
-
-  // footer
-  // if footer has a background image define it here.
-  // if footer should use a site-wide bg image use "data.site.siteMetadata.defaultImages.footer"
-  // if no footer img delete or comment-out this part
-  // const footerBgImg = data.site.siteMetadata.defaultImages.footer;
-
   constructor(props) {
     super(props);
     this.state = {
@@ -116,23 +72,68 @@ class About extends React.Component {
   render() {
     const { toTopVisible } = this.state;
 
+    // page banner
+    // set the banner properties in object literal 'bannerConfic'
+    // const bannerConfig = {
+    //  title: 'this is a banner title',
+    //  bgImgURL: '/assets/images/banners/home-banner-bg.jpg',
+    //  ctaText: 'Read more here',
+    //  ctaURL: 'https://apple.com',
+    //  fixedBg: true,
+    //  lightText: false
+    // };
+
+    // in-page banner
+    // set the banner properties in object literal 'bannerConfic'
+    // const inPageBannerConfig = {
+    //  title: 'this is an in-page banner without a CTA',
+    //  bgImgURL: '/images/banners/in-page-cta.jpg',
+    //  fixedBg: false,
+    //  lightText: true
+    // };
+
+    // top message
+    // if the page uses a local pageToMessage defined it here
+    // if page uses a site-wide topMessage use "data.site.siteMetadata.topMessage"
+    // if no topMessage delete or comment-out this part
+    // eslint-disable-next-line
+    //const topMessage = this.props.data.site.siteMetadata.topMessage;
+    const { data: { site: { siteMetadata: { topMessage } } } } = this.props;
+
+    // page title
+    // if bannerConfig is defined then we do not render a page title, the banner h1 will act as the page title
+    // both bannerConfig and topMessage are conditional props. They can be commented above without causing
+    // the code to break.
+    const pageTitle = 'this is a page specific page title';
+
+    // enable navigation links
+    // navigation links may be hidden to build a "link less" landing page
+    const hasLinks = true;
+
+    // footer
+    // if footer has a background image define it here.
+    // if footer should use a site-wide bg image use "data.site.siteMetadata.defaultImages.footer"
+    // if no footer img delete or comment-out this part
+    // const footerBgImg = data.site.siteMetadata.defaultImages.footer;
+
     return (
       <Layout
-        topMessage={this.topMessage}
-        hasLinks={this.hasLinks}
+        topMessage={topMessage}
+        hasLinks={hasLinks}
       >
-
-        {!this.bannerConfig ? <PageTitle headerText="this is the new page title" /> : null}
 
         <div className="main-content">
           <div className="container">
+
+            <PageTitle headerText={pageTitle} />
 
             <Waypoint
               onEnter={this.handleWaypointEnter}
               onLeave={this.handleWaypointLeave}
             />
 
-            <p>CSS Modules are cool</p>
+            <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus mollis interdum. Etiam porta sem malesuada magna mollis euismod. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Donec id elit non mi porta gravida at eget metus. Sed posuere consectetur est at lobortis.</p>
+            <h2>Our Team</h2>
             <User
               username="Jane Doe"
               avatar="https://s3.amazonaws.com/uifaces/faces/twitter/adellecharles/128.jpg"

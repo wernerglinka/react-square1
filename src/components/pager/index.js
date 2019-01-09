@@ -1,0 +1,35 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'gatsby';
+import styles from './pager.module.scss';
+
+const PagerItem = ({ i, numPages, pageType }) => (
+  <Link to={`/${pageType}/${i === 0 ? '' : i}`}>
+    {(i === 0 && 'First') || (i !== 0 && (i + 1) !== numPages && i + 1) || ((i + 1) === numPages && 'Last') }
+  </Link>
+);
+
+PagerItem.propTypes = {
+  i: PropTypes.number.isRequired,
+  numPages: PropTypes.number.isRequired,
+  pageType: PropTypes.string.isRequired
+};
+
+
+const Pager = ({ numPages, currentPage }) => (
+  <ul className={styles.pager}>
+    {Array.from({ length: numPages }, (_, i) => (
+      <li key={`pagination-number${i + 1}`} {...(i + 1 === currentPage) && { className: 'active' }}>
+        { ((i + 1) !== currentPage) ? <PagerItem i={i} numPages={numPages} pageType="news" /> : ((i === 0 && 'First') || (i !== 0 && (i + 1) !== numPages && i + 1) || ((i + 1) === numPages && 'Last')) }
+
+      </li>
+
+    ))}
+  </ul>
+);
+export default Pager;
+
+Pager.propTypes = {
+  numPages: PropTypes.number.isRequired,
+  currentPage: PropTypes.number.isRequired
+};

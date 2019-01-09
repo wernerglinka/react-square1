@@ -1,77 +1,50 @@
 const path = require('path');
 const { createFilePath } = require('gatsby-source-filesystem');
 
+// create news listing pages.
+// News pages list external news articles. The properties for these news articles
+// are stored at data/news/news.json
+// as the number of news articles change, pages are generated programmatically
+// and a pager is shown
 exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions;
 
 
-  const newsPage = path.resolve('./src/pages/news');
-  return graphql(
-    `
-      {
-        allNewsJson {
-          edges {
-            node {
-              name_org
-              news_org_logo
-              news_org_logo_wide
-              news_title
-              news_url
-              news_date
-              news_type
-            }
+  return new Promise((resolve, reject) => {
+    // get the number of news article entries in data/news/news.json
+    resolve(
+      graphql(
+        `
+        {
+          allNewsJson {
+            totalCount
           }
         }
-      }
-    `
-  ).then((result) => {
-    if (result.errors) {
-      throw result.errors;
-    }
+        `
+      ).then((result) => {
+        if (result.errors) {
+          throw result.errors;
+        }
+        // destructure totalCount variable from result object
+        const { data: { allNewsJson: { totalCount } } } = result;
 
-    // Create blog posts pages.
-    const newsItems = result.data.allFile.edges[0].node.childrenDataJson;
+        // Create the news list pages
+        const newsItemsPerPage = 6;
+        const numPages = Math.ceil(totalCount / newsItemsPerPage);
 
-    newsItems.forEach((index) => {
-      const previous = index === newsItems.length - 1 ? null : newsItems[index + 1].node;
-      const next = index === 0 ? null : newsItems[index - 1].node;
-
-      createPage({
-        component: newsPage,
-        context: {
-          previous,
-          next,
-        },
-      });
-    });
-
-    // Create blog post list pages
-    const newsItemsPerPage = 9;
-    const numPages = Math.ceil(newsItems.length / newsItemsPerPage);
-
-    Array.from({ length: numPages }).forEach((_, i) => {
-      createPage({
-        path: i === 0 ? '/' : `/${i + 1}`,
-        component: path.resolve('./src/pages/news'),
-        context: {
-          limit: newsItemsPerPage,
-          skip: i * newsItemsPerPage,
-          numPages,
-          currentPage: i + 1
-        },
-      });
-    });
+        Array.from({ length: numPages }).forEach((_, i) => {
+          createPage({
+            path: i === 0 ? '/news' : `/news/${i}`,
+            component: path.resolve('./src/templates/news-list/index.js'),
+            context: {
+              limit: newsItemsPerPage,
+              skip: i * newsItemsPerPage,
+              numPages,
+              currentPage: i + 1
+            },
+          });
+        });
+      })
+    );
   });
-};
-
-exports.onCreateNode = ({ node, actions, getNode }) => {
-  const { createNodeField } = actions;
-
-  if (node.internal.type === 'File') {
-    const value = createFilePath({ node, getNode });
-    createNodeField({
-      node,
-      value,
-    });
-  }
 };

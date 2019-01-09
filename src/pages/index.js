@@ -133,9 +133,9 @@ class HomePage extends React.Component {
         banner={bannerConfig}
         topMessage={topMessage}
         footerBgImg={footerBgImg}
-        hasLinks={this.hasLinks}
+        hasLinks={hasLinks}
       >
-        {!bannerConfig ? <PageTitle headerText={this.pageTitle} /> : null}
+        {!bannerConfig ? <PageTitle headerText={pageTitle} /> : null}
 
         <div className="main-content">
           <div className="container">
@@ -170,14 +170,14 @@ class HomePage extends React.Component {
             <p>Curabitur blandit tempus porttitor. Maecenas sed diam eget risus varius blandit sit amet non magna. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet fermentum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
           </div>
 
-          <Banner banner={this.inPageBannerConfig} />
+          <Banner banner={inPageBannerConfig} />
 
           <div className="container" id="testSec">
             <h2>Sed posuere consectetur </h2>
             <p>Donec sed odio dui. Nulla vitae elit libero, a pharetra augue. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas sed diam eget risus varius blandit sit amet non magna. Aenean lacinia bibendum nulla sed consectetur. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.</p>
 
             <ul className="media-list_horizontal">
-              {this.mediaList.map(listItem => (
+              {mediaList.map(listItem => (
                 <li key={listItem.mediaTitle}>
                   <MediaModule content={listItem} />
                 </li>
