@@ -24,7 +24,11 @@ Ref:
 
 
 
-## TODO
+## Page Transitions
+Page transitions are implemented based on the Universal Gatsby starter. It uses these three files
+- components/transition
+- helpers/wrapPageElement
+- gatsby-browser
 
 
   

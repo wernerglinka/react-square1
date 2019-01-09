@@ -6,33 +6,30 @@ const CustomerList = () => (
   <StaticQuery
     query={graphql`
         query CustomerQuery {
-            allFile (filter: { 
-              name: { eq : "data" } 
-              sourceInstanceName: { eq : "customers" }
-            }) {
+            allCustomersJson {
               edges {
                 node {
-                  childrenDataJson {
-                    name
-                    linkURL
-                    logo
-                  }
+                  name
+                  linkURL
+                  logo
                 }
               }
             }
           }
         `}
     render={(data) => {
-      const allCustomers = data.allFile.edges[0].node.childrenDataJson;
+      const allCustomers = data.allCustomersJson.edges;
+
+      console.log(allCustomers);
 
       return (
         <section className={styles.listWrapper}>
           <h1>Our Customers</h1>
           <ul className={styles.customerList}>
-            {allCustomers.map(customer => (
-              <li key={customer.name}>
-                <a href={customer.linkURL} target="_blank" rel="noopener noreferrer">
-                  <img src={customer.logo} alt={customer.name} />
+            {allCustomers.map(({ node }) => (
+              <li key={node.name}>
+                <a href={node.linkURL} target="_blank" rel="noopener noreferrer">
+                  <img src={node.logo} alt={node.name} />
                 </a>
               </li>
             ))}
