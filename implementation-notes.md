@@ -25,10 +25,10 @@ Ref:
 
 
 ## Page Transitions
-Page transitions are implemented based on the Universal Gatsby starter. It uses these three files
+Page transitions are implemented based on the Universal Gatsby starter. It uses these three files:
 - components/transition
 - helpers/wrapPageElement
 - gatsby-browser
 
-
-  
+# Modal
+Source: https://assortment.io/posts/accessible-modal-component-react-portals-part-1

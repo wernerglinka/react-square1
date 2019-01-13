@@ -167,7 +167,9 @@ class HomePage extends React.Component {
 
             <h2>Maecenas sed diam eget risus varius blandit sit amet non magna.</h2>
             <p>Donec sed odio dui. Maecenas sed diam eget risus varius blandit sit amet non magna. Aenean lacinia bibendum nulla sed consectetur. Donec ullamcorper nulla non metus auctor fringilla.</p>
-            <Img fluid={this.props.data.file.childImageSharp.fluid} />
+
+            <Img fluid={this.props.data.worldmap.childImageSharp.fluid} className="midsize center-align" />
+
             <p>Curabitur blandit tempus porttitor. Maecenas sed diam eget risus varius blandit sit amet non magna. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet fermentum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
           </div>
 
@@ -205,7 +207,7 @@ export const query = graphql`
         }
       }
     }
-    file (relativePath: { eq: "worldmap.jpg" }){
+    worldmap: file (relativePath: { eq: "worldmap.jpg" }) {
       childImageSharp {
         fluid(maxWidth: 700) {
         ...GatsbyImageSharpFluid_noBase64

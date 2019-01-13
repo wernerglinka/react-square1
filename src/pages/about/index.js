@@ -1,41 +1,14 @@
 import React from 'react';
 import { graphql, Link } from 'gatsby';
-import PropTypes from 'prop-types';
 import { animateScroll } from 'react-scroll';
 import Waypoint from 'react-waypoint';
-import styles from './about.module.scss';
 import Layout from '../../templates/default';
 import PageTitle from '../../components/page-title';
+import Modal from '../../components/modal';
+import TeamMember from './team';
+import styles from './about.module.scss';
 
-// local user component
-const User = (props) => {
-  const { avatar, username, excerpt } = props;
-
-  return (
-    <div className={styles.user}>
-      <img src={avatar} className={styles.avatar} alt="" />
-      <div className={styles.description}>
-        <h2 className={styles.username}>{username}</h2>
-        <p className={styles.excerpt}>{excerpt}</p>
-      </div>
-    </div>
-
-  );
-};
-
-User.defaultProps = {
-  avatar: '',
-  username: '',
-  excerpt: ''
-};
-
-User.propTypes = {
-  avatar: PropTypes.string,
-  username: PropTypes.string,
-  excerpt: PropTypes.string
-};
-
-/* eslint no-undef: 0 */
+/* eslint no-undef: 0, react/jsx-one-expression-per-line:0 */
 // eslint-disable-next-line
 class About extends React.Component {
   constructor(props) {
@@ -117,6 +90,20 @@ class About extends React.Component {
     // if no footer img delete or comment-out this part
     // const footerBgImg = data.site.siteMetadata.defaultImages.footer;
 
+    // deconstruct team query result
+    const { data: { allTeamJson: { edges: theTeam } } } = this.props;
+
+    const modalContent = (
+      <div>
+        <p>Hello world Lorem ipsum dolor sit amet, <Link to="/">first link</Link> consectetur adipiscing elit. Phasellus sagittis erat ut ex bibendum consequat. Morbi luctus ex ex, at varius purus <Link to="files">second link</Link> vehicula consectetur. Curabitur a sapien a augue consequat rhoncus. Suspendisse commodo ullamcorper nibh quis blandit. Etiam viverra neque quis mauris efficitur, lobortis aliquam ex pharetra. Nam et ante ex. Sed gravida gravida ligula, non blandit nunc. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer consectetur efficitur tempor. Nunc sollicitudin felis congue facilisis faucibus. Mauris faucibus sit amet ante eleifend dapibus.</p>
+        <p style={{ marginBottom: 0 }}>Nunc semper eu lectus ac blandit. Fusce iaculis dolor sit amet felis placerat, non auctor nibh pellentesque. Nunc dignissim, tortor eget sollicitudin pulvinar, sem est sagittis nisi, non condimentum orci felis vel libero. Aenean <Link to="/news">third link</Link> a tempus lorem. Proin a enim id magna malesuada consectetur mattis eget massa. Sed volutpat neque vitae tortor dignissim dapibus. Ut a ante maximus, sollicitudin nisi ut, varius magna. Vestibulum maximus urna eget commodo egestas. Donec sollicitudin tortor ac mauris pulvinar, ac maximus urna tempus. Mauris non libero posuere, ullamcorper neque vel, tempor sem. Suspendisse potenti. In tristique et metus id laoreet.</p>
+      </div>
+    );
+    const modalProps = {
+      ariaLabel: 'A label describing the Modal\'s current content',
+      triggerText: 'OPEN MODAL'
+    };
+
     return (
       <Layout
         topMessage={topMessage}
@@ -133,18 +120,18 @@ class About extends React.Component {
               onLeave={this.handleWaypointLeave}
             />
 
-            <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus mollis interdum. Etiam porta sem malesuada magna mollis euismod. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Donec id elit non mi porta gravida at eget metus. Sed posuere consectetur est at lobortis.</p>
+            <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus mollis <Modal {...modalProps}>{modalContent}</Modal> interdum. Etiam porta sem malesuada magna mollis euismod. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Donec id elit non mi porta gravida at eget metus. Sed posuere consectetur est at lobortis.</p>
             <h2>Our Team</h2>
-            <User
-              username="Jane Doe"
-              avatar="https://s3.amazonaws.com/uifaces/faces/twitter/adellecharles/128.jpg"
-              excerpt="I'm Jane Doe. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-            />
-            <User
-              username="Bob Smith"
-              avatar="https://s3.amazonaws.com/uifaces/faces/twitter/vladarbatov/128.jpg"
-              excerpt="I'm Bob smith, a vertically aligned type of guy. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-            />
+
+            <ul className={styles.teamList}>
+              {theTeam.map(({ node }) => (
+                <li className={styles.teamMember} key={node.avatar}>
+                  <TeamMember memberData={node} />
+                </li>
+              ))}
+            </ul>
+
+
             <Link to="/">Go Back</Link>
           </div>
         </div>
@@ -168,6 +155,16 @@ export const query = graphql`
         topMessage
         defaultImages {
           footer
+        }
+      }
+    }
+    allTeamJson {
+      edges {
+        node {
+          name
+          title
+          avatar
+          description
         }
       }
     }
