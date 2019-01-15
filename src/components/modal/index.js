@@ -1,3 +1,5 @@
+// source: https://github.com/Assortment/react-modal-component
+
 import React, { Component, Fragment } from 'react';
 import ModalLink from './modal-link';
 import ModalContent from './modal-content';
@@ -10,10 +12,9 @@ class Modal extends Component {
   // because we have the keydown event attached to the overlay element, the event will only trigger
   // if the overlay or one of its children are currently focussed which isn't the case when the modal
   // is first opened. It'll still be set to the Modal's trigger button.
-  // that is the reason why we set focus on the cl,ose button in the opOpen method below
+  // that is the reason why we set focus on the close button in the onOpen method below
   onKeyDown = ({ keyCode }) => keyCode === 27 && this.onClose();
 
-  // open modal modal trigger is clicked, then focus the close button so ESC can close the modal
   onOpen = () => {
     this.setState({ isOpen: true }, () => {
       this.closeButtonNode.focus();
@@ -21,6 +22,8 @@ class Modal extends Component {
     this.toggleScrollLock();
   };
 
+  // when either the close button, the ESC key or the overlay is clicked we first fade out
+  // the overlay and then set state isOpen to false
   onClose = () => {
     this.overlayNode.classList.add('isClosing');
     setTimeout(() => {
@@ -29,22 +32,25 @@ class Modal extends Component {
     }, 1000);
   };
 
+  // clicking on the overlay - outside the modal - closes the modal
   onClickAway = (e) => {
     if (this.modalNode && this.modalNode.contains(e.target)) return;
     this.onClose();
   };
 
+  // prevent body scrolling when modal is open
   toggleScrollLock = () => document.querySelector('html').classList.toggle('lock-scroll');
 
   render() {
     const { isOpen } = this.state;
-    const { ariaLabel, children, triggerText, role } = this.props; // eslint-disable-line
+    const { ariaLabel, children, triggerText, triggerType } = this.props; // eslint-disable-line
     return (
       <Fragment>
         <ModalLink
           onOpen={this.onOpen}
           openButtonRef={(element) => { this.openButtonNode = element; }}
           text={triggerText}
+          type={triggerType}
         />
         {isOpen
           && (
@@ -56,7 +62,6 @@ class Modal extends Component {
             content={children}
             onClickAway={this.onClickAway}
             onClose={this.onClose}
-            role={role}
             onKeyDown={this.onKeyDown}
           />
           )

@@ -13,6 +13,11 @@ module.exports = {
   },
   siteTitle: 'Panda Site Title',
   title: 'Title from siteMetadata',
+  description: 'Global site description',
+  author: 'blog author',
+  social: {
+    twitter: 'whoisthis',
+  },
   topMessage: 'this is a global site top message'
 
 };

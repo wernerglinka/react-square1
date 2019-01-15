@@ -1,6 +1,4 @@
-// source: https://github.com/Assortment/react-modal-component
-
-.modal-cover {
+.overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -10,6 +8,11 @@
   transform: translateZ(0);
   background-color: rgba(#000, 0.15);
   animation: show 1s ease;
+
+  &[class*='isClosing'] {
+    transition: opacity 1s ease;
+    opacity: 0;
+  }
 }
 
 // Fade-in open animation
@@ -17,12 +20,6 @@
   0% { display: none; opacity: 0; }
   1% { display: flex; opacity: 0; }
   100% {opacity: 1;};
-}
-// Fade-out closing animation
-@keyframes hide { 
-  100% {opacity: 1;};
-  1% { display: flex; opacity: 0; }
-  0% { display: none; opacity: 0; }
 }
 
 .modal {
@@ -42,12 +39,14 @@
     top: 50%;
     height: auto;
     transform: translate(-50%, -50%);
-    max-width: 30em;
+    max-width: 50em;
     max-height: calc(100% - 1em);
   }
 }
 
-.modal__close {
+
+
+.close {
   position: absolute;
   top: 0;
   right: 0;
@@ -59,6 +58,40 @@
   cursor: pointer;
 }
 
-.modal__body {
+.body {
   padding-top: .25em;
+  cursor: pointer;
+
+  [class*="videoWrapper"] {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 53%;
+
+    iframe {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+.button {
+  background: none;
+
+  &:hover {
+    cursor: pointer;
+    background-color: #f8f8f8;
+  }
+}
+
+.inline {
+  display: inline;
+  background: none;
+  border: none;
+
+  &:hover {
+    cursor: pointer;
+    color: #000;
+  }
 }

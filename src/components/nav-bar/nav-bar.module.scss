@@ -4,6 +4,20 @@
     margin: 0 auto;
     padding: 1.25rem 1rem;
 }
+.stickyNavBar {
+    height: 100px;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 1.25rem 1rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(240,240,240,0.9);
+}
+.navBarWrapper {
+    height: 100px
+}
 .mainLogo {
     display: inline-block;
     width: 60px;

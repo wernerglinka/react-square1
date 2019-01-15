@@ -20,7 +20,7 @@ class ModalContent extends React.Component {
     return ReactDOM.createPortal(
       <aside
         role="dialog"
-        className={`starting ${styles.modalCover}`}
+        className={styles.overlay}
         aria-label={ariaLabel}
         aria-modal="true"
         tabIndex="-1"
@@ -29,11 +29,15 @@ class ModalContent extends React.Component {
         ref={overlayRef}
       >
         <div className={styles.modal} ref={modalRef}>
-          <button type="button" className={styles.modal__close} aria-labelledby="close-modal" onClick={onClose} ref={closeButtonRef}>
+          <button type="button" className={styles.close} aria-labelledby="close-modal" onClick={onClose} ref={closeButtonRef}>
             <span id="close-modal" className="hide-visually">Close Modal</span>
             <i className="icon icon-x" />
           </button>
-          <div className={styles.modal__body}>{content}</div>
+          <div className={styles.body}>
+            <div className="videoWrapper">
+              {content}
+            </div>
+          </div>
         </div>
       </aside>,
       document.body

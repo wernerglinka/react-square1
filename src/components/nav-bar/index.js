@@ -5,7 +5,7 @@ import { Link } from 'gatsby';
 import styles from './nav-bar.module.scss';
 
 
-const NavBar = ({ hasLinks }) => {
+const NavBar = ({ hasLinks, isSticky }) => {
   const linkList = (
     <ul className={styles.linkList}>
       <li><Link to="/">Home</Link></li>
@@ -13,20 +13,24 @@ const NavBar = ({ hasLinks }) => {
       <li><Link to="/files">Files</Link></li>
       <li><Link to="/soft-scroll-demo">Soft Scroll Demo</Link></li>
       <li><Link to="/news">News</Link></li>
+      <li><Link to="/blog">Blog</Link></li>
     </ul>
   );
   return (
-    <nav className={styles.navBar}>
-      <Link to="/">
-        <img className={styles.mainLogo} src="/assets/images/main-logo.png" alt="main logo" />
-      </Link>
-      { hasLinks && linkList }
-    </nav>
+    <div className={styles.navBarWrapper}>
+      <nav className={isSticky ? styles.navBar : styles.stickyNavBar}>
+        <Link to="/">
+          <img className={styles.mainLogo} src="/assets/images/main-logo.png" alt="main logo" />
+        </Link>
+        { hasLinks && linkList }
+      </nav>
+    </div>
   );
 };
 
 NavBar.propTypes = {
-  hasLinks: PropTypes.bool.isRequired
+  hasLinks: PropTypes.bool.isRequired,
+  isSticky: PropTypes.bool.isRequired
 };
 
 export default NavBar;

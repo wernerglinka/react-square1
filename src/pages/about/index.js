@@ -2,6 +2,7 @@ import React from 'react';
 import { graphql, Link } from 'gatsby';
 import { animateScroll } from 'react-scroll';
 import Waypoint from 'react-waypoint';
+import YouTube from 'react-youtube';
 import Layout from '../../templates/default';
 import PageTitle from '../../components/page-title';
 import Modal from '../../components/modal';
@@ -93,22 +94,37 @@ class About extends React.Component {
     // deconstruct team query result
     const { data: { allTeamJson: { edges: theTeam } } } = this.props;
 
+    // const modalContent = (
+    //  <div>
+    //    <p>Hello world Lorem ipsum dolor sit amet, <Link to="/">first link</Link> consectetur adipiscing elit. Phasellus sagittis erat ut ex bibendum consequat. Morbi luctus ex ex, at varius purus <Link to="files">second link</Link> vehicula consectetur. Curabitur a sapien a augue consequat rhoncus. Suspendisse commodo ullamcorper nibh quis blandit. Etiam viverra neque quis mauris efficitur, lobortis aliquam ex pharetra. Nam et ante ex. Sed gravida gravida ligula, non blandit nunc. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer consectetur efficitur tempor. Nunc sollicitudin felis congue facilisis faucibus. Mauris faucibus sit amet ante eleifend dapibus.</p>
+    //    <p style={{ marginBottom: 0 }}>Nunc semper eu lectus ac blandit. Fusce iaculis dolor sit amet felis placerat, non auctor nibh pellentesque. Nunc dignissim, tortor eget sollicitudin pulvinar, sem est sagittis nisi, non condimentum orci felis vel libero. Aenean <Link to="/news">third link</Link> a tempus lorem. Proin a enim id magna malesuada consectetur mattis eget massa. Sed volutpat neque vitae tortor dignissim dapibus. Ut a ante maximus, sollicitudin nisi ut, varius magna. Vestibulum maximus urna eget commodo egestas. Donec sollicitudin tortor ac mauris pulvinar, ac maximus urna tempus. Mauris non libero posuere, ullamcorper neque vel, tempor sem. Suspendisse potenti. In tristique et metus id laoreet.</p>
+    //  </div>
+    // );
+    const youTubeOptions = {
+      playerVars: { autoplay: 1 }
+    };
     const modalContent = (
-      <div>
-        <p>Hello world Lorem ipsum dolor sit amet, <Link to="/">first link</Link> consectetur adipiscing elit. Phasellus sagittis erat ut ex bibendum consequat. Morbi luctus ex ex, at varius purus <Link to="files">second link</Link> vehicula consectetur. Curabitur a sapien a augue consequat rhoncus. Suspendisse commodo ullamcorper nibh quis blandit. Etiam viverra neque quis mauris efficitur, lobortis aliquam ex pharetra. Nam et ante ex. Sed gravida gravida ligula, non blandit nunc. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer consectetur efficitur tempor. Nunc sollicitudin felis congue facilisis faucibus. Mauris faucibus sit amet ante eleifend dapibus.</p>
-        <p style={{ marginBottom: 0 }}>Nunc semper eu lectus ac blandit. Fusce iaculis dolor sit amet felis placerat, non auctor nibh pellentesque. Nunc dignissim, tortor eget sollicitudin pulvinar, sem est sagittis nisi, non condimentum orci felis vel libero. Aenean <Link to="/news">third link</Link> a tempus lorem. Proin a enim id magna malesuada consectetur mattis eget massa. Sed volutpat neque vitae tortor dignissim dapibus. Ut a ante maximus, sollicitudin nisi ut, varius magna. Vestibulum maximus urna eget commodo egestas. Donec sollicitudin tortor ac mauris pulvinar, ac maximus urna tempus. Mauris non libero posuere, ullamcorper neque vel, tempor sem. Suspendisse potenti. In tristique et metus id laoreet.</p>
-      </div>
+      <YouTube videoId="zDfy67my2So" opts={youTubeOptions} />
     );
+    // a modal may be triggered by either a button or an line span. To render a button set triggerType to 'isButton'
+    // otherwise to 'isLink'
     const modalProps = {
       ariaLabel: 'A label describing the Modal\'s current content',
-      triggerText: 'OPEN MODAL'
+      triggerText: 'Joe Satriani',
+      triggerType: 'isLink'
+    };
+
+    const modalContent2 = (
+      <YouTube videoId="_AsHvTZASFk" opts={youTubeOptions} />
+    );
+    const modalProps2 = {
+      ariaLabel: 'A label describing the Modal\'s current content',
+      triggerText: 'Jeff Beck and Rod Steward',
+      triggerType: 'isButton'
     };
 
     return (
-      <Layout
-        topMessage={topMessage}
-        hasLinks={hasLinks}
-      >
+      <Layout topMessage={topMessage} hasLinks={hasLinks}>
 
         <div className="main-content">
           <div className="container">
@@ -121,6 +137,7 @@ class About extends React.Component {
             />
 
             <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus mollis <Modal {...modalProps}>{modalContent}</Modal> interdum. Etiam porta sem malesuada magna mollis euismod. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Donec id elit non mi porta gravida at eget metus. Sed posuere consectetur est at lobortis.</p>
+            <p>How about some <Modal {...modalProps2}>{modalContent2}</Modal></p>
             <h2>Our Team</h2>
 
             <ul className={styles.teamList}>

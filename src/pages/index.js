@@ -1,4 +1,19 @@
-/* eslint react/jsx-one-expression-per-line:0, react/self-closing-comp: 0 */
+/* eslint
+    react/jsx-one-expression-per-line:0,
+    react/self-closing-comp: 0,
+    react/prefer-stateless-function: 0
+*/
+
+import React from 'react';
+import { Link, graphql } from 'gatsby';
+import Img from 'gatsby-image';
+import { Link as ScrollLink } from 'react-scroll';
+import Layout from '../templates/default';
+import PageTitle from '../components/page-title';
+import CustomerList from '../components/customer-list';
+import Banner from '../components/page-banner';
+import MediaModule from '../components/media-module-vertical';
+
 /**
  *  HomePage using the default page template
  *  a default page template uses the default layout to implement
@@ -7,57 +22,11 @@
  *  - a page title that is hidden if the banner is present
  *  - a page footer
  *
- *  the page is wrapped with transition wrapper to implement animated page transitions
- *
  *  the top message may be locally defined or a global message may be used. The global
  *  message is defined in siteData/siteMeta.js
  */
-
-import React from 'react';
-import { Link, graphql } from 'gatsby';
-import Img from 'gatsby-image';
-import { Link as ScrollLink, animateScroll } from 'react-scroll';
-import Waypoint from 'react-waypoint';
-import Layout from '../templates/default';
-import PageTitle from '../components/page-title';
-import CustomerList from '../components/customer-list';
-import Banner from '../components/page-banner';
-import MediaModule from '../components/media-module-vertical';
-
-
 class HomePage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      toTopVisible: false
-    };
-  }
-
-  componentDidMount() {
-    window.setTimeout(() => {
-      // check if page is scrolled down after reload and invoke waypoint if necessary
-      const offset = window.pageYOffset;
-      if (offset > 260) {
-        this.setState(() => ({ toTopVisible: true }));
-      }
-    }, 500);
-  }
-
-  handleWaypointEnter = () => {
-    this.setState(() => ({ toTopVisible: false }));
-  };
-
-  handleWaypointLeave = () => {
-    this.setState(() => ({ toTopVisible: true }));
-  };
-
-  scrollToTop = () => {
-    animateScroll.scrollToTop();
-  };
-
   render() {
-    const { toTopVisible } = this.state;
-
     // enable navigation links
     // navigation links may be hidden to build a "link less" landing page
     const hasLinks = true;
@@ -127,6 +96,8 @@ class HomePage extends React.Component {
       }
     ];
 
+    const { data: { worldmap: { childImageSharp: { fluid: worldmap } } } } = this.props;
+
 
     return (
 
@@ -140,13 +111,6 @@ class HomePage extends React.Component {
 
         <div className="main-content">
           <div className="container">
-
-            <Waypoint
-              onEnter={this.handleWaypointEnter}
-              onLeave={this.handleWaypointLeave}
-            />
-
-
             <h2>Inceptos Pellentesque Nibh Lorem</h2>
             <p className="intro">This is the home page of the Square1 Gatsby demo site. This page features various components:</p>
             <ul>
@@ -156,10 +120,10 @@ class HomePage extends React.Component {
               <li>A <strong>Customer List</strong> (components/customer-list) that lists featured customers.</li>
               <li>An alternative use of the page banner as an <strong>in-page CTA</strong></li>
               <li>A <strong>feature list</strong> that support the main message of this page</li>
-              <li> A <strong>footer</strong> that includes a <strong>copyright</strong> component and a <strong>social links</strong> component</li>
+              <li>A <strong>footer</strong> that includes a <strong>copyright</strong> component and a <strong>social links</strong> component</li>
             </ul>
 
-            <p>Integer posuere erat <Link to="/about">Go To Soft Scroll Demp Page</Link> posuere velit aliquet. Etiam porta sem malesuada magna mollis euismod. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Nulla vitae elit libero, a pharetra augue.</p>
+            <p>Integer posuere erat <Link to="/about">Go To About Page</Link> posuere velit aliquet. Etiam porta sem malesuada magna mollis euismod. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Nulla vitae elit libero, a pharetra augue.</p>
             <p><em>This link is an example of a smooth scroll to a section on this page.</em> <ScrollLink className="smooth-scroll" smooth to="testSec">Click to scroll</ScrollLink>, dapibus ac facilisis in, egestas eget quam. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Etiam porta sem malesuada magna mollis euismod.</p>
             <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam porta sem malesuada magna mollis euismod. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
 
@@ -168,7 +132,7 @@ class HomePage extends React.Component {
             <h2>Maecenas sed diam eget risus varius blandit sit amet non magna.</h2>
             <p>Donec sed odio dui. Maecenas sed diam eget risus varius blandit sit amet non magna. Aenean lacinia bibendum nulla sed consectetur. Donec ullamcorper nulla non metus auctor fringilla.</p>
 
-            <Img fluid={this.props.data.worldmap.childImageSharp.fluid} className="midsize center-align" />
+            <Img fluid={worldmap} className="midsize center-align" />
 
             <p>Curabitur blandit tempus porttitor. Maecenas sed diam eget risus varius blandit sit amet non magna. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet fermentum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
           </div>
@@ -189,7 +153,6 @@ class HomePage extends React.Component {
 
           </div>
         </div>
-        <button className={`to-top ${toTopVisible ? 'isVisible' : ''}`} type="button" onClick={this.scrollToTop}><i className="icon icon-arrow-up"></i></button>
       </Layout>
     );
   }
@@ -211,7 +174,7 @@ export const query = graphql`
       childImageSharp {
         fluid(maxWidth: 700) {
         ...GatsbyImageSharpFluid_noBase64
-      }
+        }
       }
     }
   }
