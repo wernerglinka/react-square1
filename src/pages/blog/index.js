@@ -1,25 +1,70 @@
-/* eslint
+/*  eslint
     react/jsx-one-expression-per-line:0,
     react/prefer-stateless-function: 0
 */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link, graphql } from 'gatsby';
+import { animateScroll } from 'react-scroll';
+
 import Layout from '../../templates/default';
 import SEO from '../../components/seo';
-import { rhythm } from '../../utilities/typography';
+import styles from './blog.module.scss';
+import getAuthorName from './getAuthorName';
 
 class BlogIndex extends React.Component {
-  render() {
-    const { data } = this.props;
-    const posts = data.allMarkdownRemark.edges;
+  static propTypes = {
+    data: PropTypes.shape({
+      allMarkdownRemark: PropTypes.shape({
+        edges: PropTypes.array.isRequired
+      }).isRequired
+    }).isRequired
+  }
 
-    // enable navigation links
-    // navigation links may be hidden to build a "link less" landing page
+  constructor(props) {
+    super(props);
+    this.state = {
+      toTopVisible: false
+    };
+  }
+
+  componentDidMount() {
+    window.setTimeout(() => {
+      // check if page is scrolled down after reload and invoke waypoint if necessary
+      const offset = window.pageYOffset;
+      if (offset > 260) {
+        this.setState(() => ({ toTopVisible: true }));
+      }
+    }, 500);
+  }
+
+  handleWaypointEnter = () => {
+    this.setState(() => ({ toTopVisible: false }));
+  };
+
+  handleWaypointLeave = () => {
+    this.setState(() => ({ toTopVisible: true }));
+  };
+
+  scrollToTop = () => {
+    animateScroll.scrollToTop();
+  };
+
+
+  render() {
+    const { toTopVisible } = this.state;
+
+    // destructure data to get a posts object
+    const { data: { allMarkdownRemark: { edges: posts } } } = this.props;
+
+    // destructure the authors object
+    const { data: { allAuthorsJson: { edges: authors } } } = this.props;
+
+    // this page shows the main nav
     const hasLinks = true;
 
-    // page banner
-    // set the banner properties in object literal 'bannerConfic'
+    // this page uses a banner with title instead of a simple page title
     const bannerConfig = {
       title: 'Blog',
       bgImgURL: '/assets/images/blog/blog.jpg',
@@ -29,18 +74,10 @@ class BlogIndex extends React.Component {
       lightText: true
     };
 
-    // top message
-    // if the page uses a local pageToMessage defined it here
-    // if page uses a site-wide topMessage use "data.site.siteMetadata.topMessage"
-    // if no topMessage delete or comment-out this part
-    const topMessage = 'this is the <a href="https://apple.com">page specific</a> top message';
+    // this page uses page specific top message
+    const topMessage = 'this is the <a href="https://apple.com">blog specific</a> top message';
 
-
-    // footer
-    // if footer has a background image define it here.
-    // if footer should use a site-wide bg image use "data.site.siteMetadata.defaultImages.footer"
-    // if no footer img delete or comment-out this part
-    // footerBgImg = this.props.data.site.siteMetadata.defaultImages.footer;
+    // this page uses the site-wide footer background image
     const { data: { site: { siteMetadata: { defaultImages: { footer: footerBgImg } } } } } = this.props;
 
     return (
@@ -58,24 +95,24 @@ class BlogIndex extends React.Component {
         <div className="main-content">
           <div className="container">
 
-            {posts.map(({ node }) => {
-              const title = node.frontmatter.title || node.fields.slug;
-              return (
-                <div key={node.fields.slug}>
-                  <h3
-                    style={{
-                      marginBottom: rhythm(1 / 4),
-                    }}
-                  >
-                    <Link style={{ boxShadow: 'none' }} to={node.fields.slug}>
-                      {title}
-                    </Link>
-                  </h3>
-                  <small>{node.frontmatter.date}</small>
-                  <p dangerouslySetInnerHTML={{ __html: node.excerpt }} />
-                </div>
-              );
-            })}
+            <ul className={styles.blogList}>
+              {posts.map(({ node }) => {
+                const title = node.frontmatter.title || node.fields.slug;
+                return (
+                  <li key={node.fields.slug}>
+                    <h3>
+                      <Link to={node.fields.slug}>
+                        {title}
+                      </Link>
+                    </h3>
+                    <p><span className={styles.blogDate}>{node.frontmatter.date}</span> | by <span className={styles.blogAuthor}>{getAuthorName(node.frontmatter.author, authors)}</span></p>
+                  <p dangerouslySetInnerHTML={{ __html: node.excerpt }} /> {/*eslint-disable-line*/}
+                  </li>
+                );
+              })}
+            </ul>
+
+            <button className={`to-top ${toTopVisible ? 'isVisible' : ''}`} type="button" onClick={this.scrollToTop}><i className="icon icon-arrow-up" /></button>
 
           </div>
         </div>
@@ -107,7 +144,17 @@ export const pageQuery = graphql`
           frontmatter {
             title
             date(formatString: "MMMM DD, YYYY")
+            author
           }
+        }
+      }
+    }
+    allAuthorsJson {
+      edges {
+        node {
+          short
+          name
+          avatar
         }
       }
     }

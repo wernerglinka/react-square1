@@ -3,6 +3,7 @@ title: Hello World
 date: '2015-05-01T22:12:03.284Z'
 bannerImg: 'blog3.jpg'
 bannerTextLight: true
+author: author1, author4
 ---
 
 This is my first post on my new fake blog! How exciting!

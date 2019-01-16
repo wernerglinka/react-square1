@@ -4,16 +4,27 @@
 */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link, graphql } from 'gatsby';
 import { animateScroll } from 'react-scroll';
 import Waypoint from 'react-waypoint';
 
-import Bio from '../components/bio';
 import Layout from './default';
+import Bio from '../components/bio';
 import SEO from '../components/seo';
-import { rhythm, scale } from '../utilities/typography';
+
 
 class BlogPostTemplate extends React.Component {
+  static propTypes = {
+    data: PropTypes.shape({
+      markdownRemark: PropTypes.object.isRequired
+    }).isRequired,
+    pageContext: PropTypes.shape({
+      previous: PropTypes.object,
+      next: PropTypes.object
+    }).isRequired
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -44,15 +55,23 @@ class BlogPostTemplate extends React.Component {
   };
 
   render() {
-    const post = this.props.data.markdownRemark;
-    // const siteTitle = this.props.data.site.siteMetadata.title;
-    const { previous, next } = this.props.pageContext;
+    const { toTopVisible } = this.state;
 
+    // deconstruct post from props
+    const { data: { markdownRemark: post } } = this.props;
+    // deconstruct previous and next objects from props
+    const { pageContext: { previous, next } } = this.props;
+
+    // this page shows the main nav
     const hasLinks = true;
 
-    const { toTopVisible } = this.state;
+    // this page uses the site-wide footer background image
     const { data: { site: { siteMetadata: { defaultImages: { footer: footerBgImg } } } } } = this.props;
+
+    // this page uses page specific top message
     const topMessage = 'this is the <a href="https://apple.com">Blogs</a> top message';
+
+    // this page uses a banner with title instead of a simple page title
     const bannerConfig = {
       title: post.frontmatter.title,
       bgImgURL: `/assets/images/blog/${post.frontmatter.bannerImg}`,
@@ -73,57 +92,28 @@ class BlogPostTemplate extends React.Component {
 
         <div className="main-content">
           <div className="container">
+            <div className="columnWrapper">
+              <div className="mainColumn">
 
-            <Waypoint
-              onEnter={this.handleWaypointEnter}
-              onLeave={this.handleWaypointLeave}
-            />
-            <p
-              style={{
-                ...scale(-1 / 5),
-                display: 'block',
-                marginBottom: rhythm(1),
-                marginTop: rhythm(-1),
-              }}
-            >
-              {post.frontmatter.date}
-            </p>
-            <div dangerouslySetInnerHTML={{ __html: post.html }} />
-            <hr
-              style={{
-                marginBottom: rhythm(1),
-              }}
-            />
-            <Bio />
+                <Waypoint
+                  onEnter={this.handleWaypointEnter}
+                  onLeave={this.handleWaypointLeave}
+                />
+                <p>{post.frontmatter.date}</p>
+                <div dangerouslySetInnerHTML={{ __html: post.html }} /> {/* eslint-disable-line */}
 
-            <ul
-              style={{
-                display: 'flex',
-                flexWrap: 'wrap',
-                justifyContent: 'space-between',
-                listStyle: 'none',
-                padding: 0,
-              }}
-            >
-              <li>
-                {previous && (
-                <Link to={previous.fields.slug} rel="prev">
-                ←
-                  {' '}
-                  {previous.frontmatter.title}
-                </Link>
-                )}
-              </li>
-              <li>
-                {next && (
-                <Link to={next.fields.slug} rel="next">
-                  {next.frontmatter.title}
-                  {' '}
-→
-                </Link>
-                )}
-              </li>
-            </ul>
+                <ul>
+                  <li> {previous && (<Link to={previous.fields.slug} rel="prev">← {previous.frontmatter.title}</Link>)} </li>
+                  <li> {next && (<Link to={next.fields.slug} rel="next">{next.frontmatter.title} →</Link>)} </li>
+                </ul>
+              </div>
+
+              <aside className="secondaryColumn">
+                {console.log(post.frontmatter.author)}
+                <Bio author={post.frontmatter.author} />
+              </aside>
+
+            </div>
 
             <button className={`to-top ${toTopVisible ? 'isVisible' : ''}`} type="button" onClick={this.scrollToTop}><i className="icon icon-arrow-up" /></button>
 
@@ -154,6 +144,7 @@ export const pageQuery = graphql`
       html
       frontmatter {
         title
+        author
         date(formatString: "MMMM DD, YYYY")
         bannerImg
         bannerTextLight

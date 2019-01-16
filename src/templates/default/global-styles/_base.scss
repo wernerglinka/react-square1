@@ -41,6 +41,20 @@ html {
     padding: 30px;
 }
 
+.columnWrapper {
+    display: flex;
+    justify-content: space-between;
+
+    .mainColumn {
+        flex: 0 0 65%;
+    }
+
+    .secondaryColumn {
+        flex: 0 0 35%;
+        padding-left: 50px;
+    }
+}
+
 .center-elements {
     text-align: center;
 }

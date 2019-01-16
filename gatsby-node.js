@@ -68,7 +68,9 @@ exports.createPages = ({ graphql, actions }) => {
         /**
          * section for blogposts
          */
-        const posts = result.data.allMarkdownRemark.edges;
+        // destructure posts object from result object
+        // const posts = result.data.allMarkdownRemark.edges;
+        const { data: { allMarkdownRemark: { edges: posts } } } = result;
 
         posts.forEach((post, index) => {
           const previous = index === posts.length - 1 ? null : posts[index + 1].node;

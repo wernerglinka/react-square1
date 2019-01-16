@@ -11,8 +11,9 @@ import Footer from '../../components/page-footer';
 import './global-styles/main.scss';
 
 /**
- * default page template with main navigation, optional banner and footer
- * note that all layoput styles are define globally in static/global-styles.scss
+ * default page layout with main navigation, optional banner and footer
+ * note that all layout styles are define globally in static/global-styles.scss
+ * The layout is also where sticky main nav and a to top button are implemented
  */
 class DefaultLayout extends React.Component {
   constructor(props) {
@@ -75,7 +76,7 @@ class DefaultLayout extends React.Component {
 
         {/* waypoint for sticky nav */}
         <Waypoint
-          topOffset={80}
+          topOffset={100}
           onEnter={this.makeNavFixed}
           onLeave={this.makeNavStatic}
         />
@@ -109,14 +110,11 @@ DefaultLayout.defaultProps = {
 };
 
 DefaultLayout.propTypes = {
-  topMessage: PropTypes.string,
-  // eslint-disable-next-line
-  banner: PropTypes.object,
-  // eslint-disable-next-line
+  topMessage: PropTypes.string, // eslint-disable-line
+  banner: PropTypes.object, // eslint-disable-line
   footerBgImg: PropTypes.string,
   hasLinks: PropTypes.bool,
-  // eslint-disable-next-line
-  children: PropTypes.object.isRequired
+  children: PropTypes.any.isRequired // eslint-disable-line
 };
 
 export default DefaultLayout;
