@@ -12,6 +12,7 @@ import Waypoint from 'react-waypoint';
 import Layout from './default';
 import Bio from '../components/bio';
 import SEO from '../components/seo';
+import getAuthorName from '../utilities/getAuthorName';
 
 
 class BlogPostTemplate extends React.Component {
@@ -59,6 +60,8 @@ class BlogPostTemplate extends React.Component {
 
     // deconstruct post from props
     const { data: { markdownRemark: post } } = this.props;
+    // deconstruct fronmatter from props
+    const { data: { markdownRemark: { frontmatter } } } = this.props;
     // deconstruct previous and next objects from props
     const { pageContext: { previous, next } } = this.props;
 
@@ -81,6 +84,9 @@ class BlogPostTemplate extends React.Component {
       lightText: post.frontmatter.bannerTextLight
     };
 
+    // destructure the authors object
+    const { data: { allAuthorsJson: { edges: authors } } } = this.props;
+
     return (
       <Layout
         banner={bannerConfig}
@@ -99,17 +105,19 @@ class BlogPostTemplate extends React.Component {
                   onEnter={this.handleWaypointEnter}
                   onLeave={this.handleWaypointLeave}
                 />
+                <p>by {getAuthorName(frontmatter.author, authors)}</p>
                 <p>{post.frontmatter.date}</p>
                 <div dangerouslySetInnerHTML={{ __html: post.html }} /> {/* eslint-disable-line */}
 
+                {console.log(previous)}
+
                 <ul>
-                  <li> {previous && (<Link to={previous.fields.slug} rel="prev">← {previous.frontmatter.title}</Link>)} </li>
-                  <li> {next && (<Link to={next.fields.slug} rel="next">{next.frontmatter.title} →</Link>)} </li>
+                  {previous && (<li> <Link to={previous.fields.slug} rel="prev">← {previous.frontmatter.title}</Link> </li>)}
+                  {next && (<li> <Link to={next.fields.slug} rel="next">{next.frontmatter.title} →</Link> </li>)}
                 </ul>
               </div>
 
               <aside className="secondaryColumn">
-                {console.log(post.frontmatter.author)}
                 <Bio author={post.frontmatter.author} />
               </aside>
 
@@ -148,6 +156,15 @@ export const pageQuery = graphql`
         date(formatString: "MMMM DD, YYYY")
         bannerImg
         bannerTextLight
+      }
+    }
+    allAuthorsJson {
+      edges {
+        node {
+          short
+          name
+          avatar
+        }
       }
     }
   }

@@ -1,33 +1,31 @@
 /**
- * @name getAuthorInfo
+ * @name getAuthorName
  * @param {*} short string containing user names of blog post author(s)
  * @param {*} allAuthors  array containing all knows authors
  *
  * @description full author names are listed in data/authors/authors.json
  *
- * @returns array with all author(s) info
+ * @returns string with full author names
  */
-const getAuthorInfo = (short, allAuthors) => {
+const getAuthorName = (short, allAuthors) => {
   // there might be multiple authors
   // if  no author is given we add a default author
   const postAuthors = short ? short.split(',') : ['admin'];
 
-  const authorInfo = [];
+  let thisAuthor = '';
   let foundName;
   // retrieve post author name(s) from all authors
   postAuthors.forEach((authorName, index) => {
-    const temp = {};
     // loop through all know authors and compare with post author(s)
     foundName = allAuthors.find(({ node }) => node.short === authorName.trim());
-    if (foundName) {
-      temp.name = `${foundName.node.name}`;
-      temp.position = `${foundName.node.position}`;
-      temp.avatar = `${foundName.node.avatar}`;
-      temp.bio = `${foundName.node.bio}`;
+    // add author name to return string
+    thisAuthor += `${foundName.node.name}`;
+    // add comma if we have multiple authors names and this is not the last name
+    if (postAuthors.length > 1 && index + 1 < postAuthors.length) {
+      thisAuthor += ', ';
     }
-    authorInfo.push(temp);
   });
-  return authorInfo;
+  return thisAuthor;
 };
 
-export default getAuthorInfo;
+export default getAuthorName;

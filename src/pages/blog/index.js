@@ -11,7 +11,7 @@ import { animateScroll } from 'react-scroll';
 import Layout from '../../templates/default';
 import SEO from '../../components/seo';
 import styles from './blog.module.scss';
-import getAuthorName from './getAuthorName';
+import getAuthorName from '../../utilities/getAuthorName';
 
 class BlogIndex extends React.Component {
   static propTypes = {

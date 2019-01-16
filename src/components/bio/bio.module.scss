@@ -1,0 +1,13 @@
+.authors-list {
+    list-style: none;
+
+    li {
+        padding-bottom: 20px;
+        border-bottom: 1px solid #ccc;
+        margin-bottom: 40px;
+
+        &:last-child {
+            border: none;
+        }
+    }
+}
